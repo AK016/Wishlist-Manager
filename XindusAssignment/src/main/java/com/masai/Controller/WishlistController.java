@@ -22,7 +22,7 @@ import com.masai.Repository.UserRepository;
 import com.masai.Repository.WishlistItemRepository;
 
 @RestController
-@RequestMapping("/wishlists")
+@RequestMapping("/api/wishlists")
 public class WishlistController {
 	@Autowired
 	private UserRepository userRepository;
@@ -30,7 +30,8 @@ public class WishlistController {
 	@Autowired
 	private WishlistItemRepository wishlistItemRepository;
 
-	@GetMapping("/getUserWishlist")
+	//Endpoint to retrieve user's wishlist
+	@GetMapping
 	public ResponseEntity<List<WishlistItem>> getUserWishlist() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName(); 
@@ -45,7 +46,8 @@ public class WishlistController {
 		}
 	}
 
-	@PostMapping("/addItem")
+	//Endpoint to add an item to the wishlist
+	@PostMapping
 	public ResponseEntity<?> addWishlistItem(@RequestBody WishlistItem wishlistItem) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -62,6 +64,7 @@ public class WishlistController {
 		}
 	}
 
+	//Endpoint to delete an item by ID:
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteWishlistItem(@PathVariable Long id) {
 		Optional<WishlistItem> wishlistItemOptional = wishlistItemRepository.findById(id);
