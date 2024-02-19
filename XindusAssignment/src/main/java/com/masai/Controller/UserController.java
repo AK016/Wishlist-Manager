@@ -39,13 +39,15 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	//Endpoint to register a new user
 	@PostMapping("/register")
 	public ResponseEntity<String> reigsterUser(@RequestBody User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 		return ResponseEntity.ok("User Registered Successfully");
 	}
-
+	
+	//Endpoint to login the registered users
 	@PostMapping("/login")
 	public JwtResponse login(@RequestBody JwtRequest request) {
 		doAuthenticate(request.getUsername(), request.getPassword());
@@ -58,6 +60,7 @@ public class UserController {
 		return jwtResponse;
 	}
 
+	//Authentication and JWT generation
 	private void doAuthenticate(String username, String password) {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
 		try {
