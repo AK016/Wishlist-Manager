@@ -1,4 +1,4 @@
-# XindusAssignment
+# Wishlist Manager
 
 ## Spring Boot Wishlist Management System
 
